@@ -5,8 +5,9 @@ class Calculations {
 
         double number1 = 11.0;
         double number2 = 33.0;
+        double number3 = 53.0;
 
-        double Multiply= number1 * number2;
+        double Multiply= number1 * number2 / number3;
         System.out.println("Multiply = " + Multiply);
 
         double Subs= number1 - number2;
