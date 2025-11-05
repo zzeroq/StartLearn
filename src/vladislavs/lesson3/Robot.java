@@ -18,7 +18,7 @@ public class Robot {
             System.out.println("Hello! ...bip");
             Thread.sleep(500);
             System.out.println("Bzzz ...bip");
-            Thread.sleep(500);
+            Thread.sleep(1500);
             System.out.println("My name... bzzz..." + nickName);
             Thread.sleep(500);
 

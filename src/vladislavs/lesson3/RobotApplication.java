@@ -8,7 +8,7 @@ public class RobotApplication {
 
 
         robot.sayHello();
-        robot.changeNickName("PlasmaDestroyer");
+        robot.changeNickName("PlasmaDestroyer!!!");
         robot.sayHello();
 
     }
