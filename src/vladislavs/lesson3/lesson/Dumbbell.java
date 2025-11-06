@@ -10,18 +10,25 @@ class Dumbbell {
         color = newColor;
         weight = newWeight;
 
-
     }
 
+    String newDumbbellColor(){
 
-    Dumbbell(String newColor){
+        return color;
+    }
+
+    int newDumbbellWeight(){
+
+        return weight;
+
+    }
+    Dumbbell(String newColor) {
 
         color = newColor;
-        weight = 10;
+        weight = 0;
 
 
     }
-
-
-
 }
+
+
