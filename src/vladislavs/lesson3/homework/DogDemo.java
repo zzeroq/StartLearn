@@ -1,7 +1,5 @@
 package vladislavs.lesson3.homework;
 
-import java.util.Scanner;
-
 public class DogDemo {
 
     public static void main (String[] args) {
