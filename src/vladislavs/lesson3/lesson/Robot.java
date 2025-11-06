@@ -1,4 +1,4 @@
-package vladislavs.lesson3;
+package vladislavs.lesson3.lesson;
 
 public class Robot {
 
