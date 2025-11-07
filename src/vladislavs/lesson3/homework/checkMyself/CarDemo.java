@@ -9,7 +9,7 @@ public class CarDemo {
 
 
         System.out.println("Car - " + car1.getName()); // function
-        System.out.println("Cost - " + car1.getName()); // function
+        System.out.println("Cost - " + car1.getCost()); // function
 
 
         System.out.println(car1.sound());
