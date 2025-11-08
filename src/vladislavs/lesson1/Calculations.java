@@ -27,6 +27,13 @@ class Calculations {
         double numberMax = Math.pow(2, 20);
         double SumMax = numberMax + number1_0;
         System.out.println("SumMax = " + SumMax);
+
+
+
+
+
+
+
     }
 
 
