@@ -24,6 +24,8 @@ public class DataTypePrimitive {
         char symbols = 'a';
 
         boolean cap = true; // or false
+        Dog dog = new Dog("Hercules");  "Hercules" - это аргумент конструктора
+        dog.setAge(5); 5 - это аргумент метода setAge
         */
         int a = 25;
         int c = 10;
