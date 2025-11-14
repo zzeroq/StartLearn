@@ -15,7 +15,6 @@ public class Product {
         return this.name;
     }
 
-
     public double actualPrice(){
 
         return regularPrice-(regularPrice*discount);
