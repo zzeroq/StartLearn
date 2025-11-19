@@ -1,4 +1,4 @@
-package vladislavs_uhovs.lesson_4.lesson.boolean_1.switch1;
+package vladislavs_uhovs.lesson_4.lesson.switch1.switch1;
 
 public class Switch1 {
 
