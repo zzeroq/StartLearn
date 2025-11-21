@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson4.homework.level2.task8;
+package vladislavs.uhovs.lesson4.homework.level3.task8;
 
 import java.util.Scanner;
 
