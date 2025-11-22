@@ -10,16 +10,13 @@ public class Dog {
     Dog(String nickName, String color){
         this.nickName=nickName;
         this.color=color;
-
-
-
     }
-    String getNickName() {
 
+    String getNickName() {
         return this.nickName;
     }
-    int getAge() {
 
+    int getAge() {
         return this.age;
     }
 
@@ -49,10 +46,7 @@ public class Dog {
                     "Now your age is " + getAge() + " years old");
     }
     void changeColor(String color){
-
         this.color=color;
-
-
     }
 
 }

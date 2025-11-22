@@ -15,11 +15,9 @@ public class Cup {
     public int getGram(){
         return this.gram;
     }
-
     public String getColor(){
         return this.color;
     }
-
     public String getSize(){
         return this.size;
     }
