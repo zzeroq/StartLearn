@@ -1,6 +1,6 @@
 package vladislavs.uhovs.lesson4.homework.level4.tasks10to14;
 
-public class Calculator {
+class Calculator {
 
     public int sum (int firstNumber, int secondNumber){
         return firstNumber + secondNumber;
