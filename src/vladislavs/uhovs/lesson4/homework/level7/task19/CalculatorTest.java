@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson4.homework.level7.task17;
+package vladislavs.uhovs.lesson4.homework.level7.task19;
 
 class CalculatorTest {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ class CalculatorTest {
 
     private final Calculator calculator = new Calculator();
 
-    public void checkResult(String testName, int result, int expectedResult) {
+    public void checkResult(String testName, double result, double expectedResult) {
         if (result == expectedResult) {
             System.out.println(testName + " = OK");
         } else {
@@ -28,23 +28,23 @@ class CalculatorTest {
         }
     }
     public void sumTest() {
-        int result = calculator.sum(35, 40);
+        double result = calculator.sum(35, 40);
         checkResult("Sum test", result, 75);
 
     }
 
     public void subTest() {
-        int result = calculator.sub(35, 15);
+        double result = calculator.sub(35, 15);
         checkResult("Sub test", result, 20);
     }
 
     public void mulTest() {
-        int result = calculator.mul(5, 5);
+        double result = calculator.mul(5, 5);
         checkResult("Multiply test", result, 25);
     }
 
     public void divTest() {
-        int result = calculator.div(40, 8);
+        double result = calculator.div(40, 8);
         checkResult("Divide test", result, 5);
     }
 

@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson4.homework.level7.task17;
+package vladislavs.uhovs.lesson4.homework.level7.task20;
 
 public class LightColorDetectorTest {
     public static void main(String[] args) {

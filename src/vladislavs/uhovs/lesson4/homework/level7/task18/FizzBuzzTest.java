@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson4.homework.level7.task17;
+package vladislavs.uhovs.lesson4.homework.level7.task18;
 
 public class FizzBuzzTest {
     public static void main(String[] args) {

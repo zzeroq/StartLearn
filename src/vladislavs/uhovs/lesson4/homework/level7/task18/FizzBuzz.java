@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson4.homework.level7.task17;
+package vladislavs.uhovs.lesson4.homework.level7.task18;
 
 public class FizzBuzz {
     public String detect(int inNumber){
