@@ -55,7 +55,7 @@ p.getName() = Method call (вызов метода)
 
 return type = тип результата
     public int getAge() { }
-
+    одно действие = итерация (iteration)
 
     */
 }
