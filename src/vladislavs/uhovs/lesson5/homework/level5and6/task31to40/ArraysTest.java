@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson5.homework.level5;
+package vladislavs.uhovs.lesson5.homework.level5and6.task31to40;
 
 public class ArraysTest {
 
