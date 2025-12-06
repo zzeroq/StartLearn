@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson5.selfCheck.level0;
+package vladislavs.uhovs.lesson5.selfCheck.level0.calculator;
 
 import java.util.Scanner;
 
