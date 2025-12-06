@@ -17,10 +17,11 @@ public class Arrays {
     public void print(int[] array) {
         for (int i = 0; i < array.length; i++) {
             if (i > 0){
-                System.out.println(" ");
+                System.out.print(" ");
             }
             System.out.println(array[i]);
         }
+        System.out.println();
     }
 
     public int findMax(int[] array) {
