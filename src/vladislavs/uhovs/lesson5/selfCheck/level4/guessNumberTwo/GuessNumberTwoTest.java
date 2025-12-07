@@ -13,42 +13,55 @@ public class GuessNumberTwoTest {
 
     }
 
-    public void checkResult(String testName, int expectedResult, int realResult){
-        System.out.println("Random number is: " + expectedResult);
+    public void inRandom(){
+        int expectedResult = 67;
+        int realResult = guessNumberTwo.getRandom(101);
         if (expectedResult == realResult){
-            System.out.println(testName + " test: OK!" );
-        }else if (expectedResult >= 0 && expectedResult < 101){
-            System.out.println(testName + " test: OK!");
+            System.out.println("Random number: " + realResult);
+            System.out.println("In test: OK!");
         }else {
-            System.out.println(testName + " test: FAIL");
+            System.out.println("Random number: " + realResult);
+            System.out.println("In test: Fail!");
         }
         System.out.println();
     }
 
-    public void inRandom(){
-        int expectedResult = guessNumberTwo.getRandom(101);
-        checkResult("In random", expectedResult, 67);
-    }
-
     public void inRange(){
-        int expectedResult = guessNumberTwo.getRandom(101);
-        checkResult("In range", expectedResult, 40);
+        boolean inRange = true;
+        int realResult = guessNumberTwo.getRandom(101);
+        for (int i = 0; i < 100; i++) {
+            realResult = guessNumberTwo.getRandom(101);
+            if (realResult < 0 || realResult > 100){
+                System.out.println("Random number: " + realResult);
+                System.out.println("In range test: FAIL!");
+                inRange = false;
+                break;
+            }
+        }
+        if(inRange) {
+            System.out.println("Random number: " + realResult);
+            System.out.println("In range test: OK!");
+        }
+        System.out.println();
     }
 
-    boolean isZero = true;
+
     public void zeroInRandom(){
-        int expectedResult = guessNumberTwo.getRandom(1);
+        boolean isZero = true;
+        int realResult = guessNumberTwo.getRandom(1);
         for (int i = 0; i < 100; i++) {
-            expectedResult = guessNumberTwo.getRandom(1);
-            if (expectedResult != 0){
-                System.out.println("Random number: " + expectedResult);
+            realResult = guessNumberTwo.getRandom(1);
+            if (realResult != 0){
+                System.out.println("Random number: " + realResult);
                 System.out.println("Is zero test: FAIL!");
                 isZero = false;
                 break;
             }
         }
         if(isZero) {
-            checkResult("Is zero", expectedResult, 0);
+            System.out.println("Random number: " + realResult);
+            System.out.println("Is zero test: OK!");
         }
+        System.out.println();
     }
 }
