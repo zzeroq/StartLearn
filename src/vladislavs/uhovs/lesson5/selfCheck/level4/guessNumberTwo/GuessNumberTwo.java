@@ -6,15 +6,17 @@ public class GuessNumberTwo {
 
     private final Random random;
 
-    public GuessNumberTwo(){
+    public GuessNumberTwo() {
         this(new Random());
     }
 
-    public GuessNumberTwo(Random random){
+    public GuessNumberTwo(Random random) {
         this.random = random;
     }
 
-    public int getRandom(int number){
+    public int getRandom(int number) {
         return random.nextInt(number);
     }
+
+
 }

@@ -109,4 +109,36 @@ public class PasswordGenerator {
         return buffer;
 
     }
+    /* char[] numeric = {'1', '2', '3', '4', '5', '6', '7', '8', '9',};
+
+    String generate(int length) {
+        char[] numbers = new char[length];
+        char[] symbols = numeric;
+
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = symbols[random.nextInt(symbols.length)];
+        }
+        return new String(numbers);
+    }
+     char[] createSymbolArray(boolean includeNumeric){
+        int lengthChar = 0;
+
+        if (includeNumeric){
+            lengthChar += numeric.length;
+        }
+        if (lengthChar == 0){
+            return new char[1];
+        }
+        char [] buffer = new char[lengthChar];
+        int cursor = 0;
+        if (includeNumeric){
+            for(char c : numeric){
+                buffer [cursor] = c;
+                cursor++;
+            }
+        }
+        return buffer;
+    }
+
+     */
 }
