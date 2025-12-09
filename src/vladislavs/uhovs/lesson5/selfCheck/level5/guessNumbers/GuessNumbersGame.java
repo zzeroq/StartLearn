@@ -12,9 +12,6 @@ public class GuessNumbersGame {
     public GuessNumbersGame(Random random){
         this.random = random;
     }
-    public int getRandom(int number){
-        return random.nextInt(number);
-    }
 
     public int[] getArray(int length){
         int[] numbersToFind = new int[length];
