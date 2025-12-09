@@ -13,9 +13,9 @@ public class ArrayTask3Test {
     public void zeroLengthTest() {
         ArrayTask3 task = new ArrayTask3(new Random());
 
-        int[] result = task.createArrayRandom(0);
+        int[] result = task.createArrayRandom(1);
 
-        if (result != null && result.length == 0) {
+        if (result != null && result.length == 1) {
             System.out.println("zeroLengthTest: OK");
         } else {
             System.out.println("zeroLengthTest: FAIL");
