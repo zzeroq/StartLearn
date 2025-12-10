@@ -27,7 +27,7 @@ public class GuessNumbersGame {
             if (numbersToFind[i] == guess[i]) {
                 mask.append(numbersToFind[i]).append(" ");
             }else {
-                mask.append("_ "); // append same as concatenation
+                mask.append("❌ "); // append same as concatenation
             }
         }
         return mask.toString().trim(); // trim removes space at the end and beginning
