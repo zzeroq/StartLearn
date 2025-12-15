@@ -45,7 +45,6 @@ public class GuessNumberTwoTest {
         System.out.println();
     }
 
-
     public void zeroInRandom(){
         boolean isZero = true;
         int realResult = guessNumberTwo.getRandom(1);

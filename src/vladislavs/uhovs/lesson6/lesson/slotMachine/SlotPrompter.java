@@ -26,5 +26,4 @@ public class SlotPrompter {
         input.nextLine();
         return amount;
     }
-
 }
