@@ -5,17 +5,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TicTacToeTest {
 
     private TicTacToe ticTacToe;
+    Scanner input = new Scanner(System.in);
+    Random random = new Random();
 
     @BeforeEach
     public void setUp(){
-        this.ticTacToe = new TicTacToe();
+        this.ticTacToe = new TicTacToe(input, random );
     }
     private int[][] emptyField(){
         int[][] emptyField = new int[3][3];
@@ -187,7 +190,18 @@ public class TicTacToeTest {
         assertFalse(ticTacToe.isDrawPosition(field));
     }
 
+    @Test
+    @DisplayName("Should create field and fill out with -1")
+    public void fieldFillOut(){
+        int[][] field = emptyField();
+        assertTrue(Arrays.deepEquals(ticTacToe.createField(), field));
+    }
 
-
-
+    @Test
+    @DisplayName("Should return false if field didn't fill out with -1")
+    public void fieldNotFillOut() {
+        int[][] field = emptyField();
+        field[0][0] = 1;
+        assertFalse(Arrays.deepEquals(ticTacToe.createField(), field));
+    }
 }
