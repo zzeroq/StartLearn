@@ -8,22 +8,22 @@ public class WordService {
         if (text == null || text.isEmpty()){
             return "";
         }
-        String lowerText = cleanWords(text);
-        String[] splitText = splitWords(lowerText);
+        String lowerText = normalizeText(text);
+        String[] splitText = splitToWords(lowerText);
         if (splitText.length == 0) {
             return "";
         }
-        Map<String, Integer> wordCount = countWords(splitText);
+        Map<String, Integer> wordCount = countWordFrequencies(splitText);
 
-        return findMaxWord(wordCount);
+        return pickMostFrequentWord(wordCount);
     }
 
-    private String cleanWords(String text){
+    private String normalizeText(String text){
         String lower = text.toLowerCase();
         return lower.replaceAll("[^a-z ]" , " ");
     }
 
-    private String[] splitWords(String cleanText){
+    private String[] splitToWords(String cleanText){
         String trimmed = cleanText.trim();
         if (trimmed.isEmpty()){
             return new String[0];
@@ -31,7 +31,7 @@ public class WordService {
         return trimmed.split("\\s+");
     }
 
-    private Map<String, Integer> countWords(String[] words) {
+    private Map<String, Integer> countWordFrequencies(String[] words) {
         Map<String, Integer> wordCounts = new LinkedHashMap<>();
 
         for (String word : words) {
@@ -41,8 +41,8 @@ public class WordService {
         return wordCounts;
     }
 
-    private String findMaxWord(Map<String, Integer> wordCounts) {
-        String maxWord = "";
+    private String pickMostFrequentWord(Map<String, Integer> wordCounts) {
+        String mostFrequentWord = "";
         int maxCount = 0;
 
         for (Map.Entry<String, Integer> entry : wordCounts.entrySet()){
@@ -51,9 +51,9 @@ public class WordService {
 
             if (count > maxCount) {
                 maxCount = count;
-                maxWord = word;
+                mostFrequentWord = word;
             }
         }
-        return maxWord;
+        return mostFrequentWord;
     }
 }

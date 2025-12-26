@@ -51,4 +51,9 @@ Each day learning hours:
 49. free time
 50. 3 hours - Arrays.sort(arr); + tests + video(Encapsulation)
 Encapsulation is combining data and methods while hiding the details.
-51. 2 hours -
+51. 3.5 hours - video + coding + (Map)
+                counts.put(key, counts.getOrDefault(key, 0) + 1);
+                прочитать: get(key) / getOrDefault(key, default)
+                записать/обновить: put(key, value)
+                проверить наличие: containsKey(key)
+                пройти по всем: entrySet()
