@@ -8,6 +8,9 @@ public class TicTacToe {
 
     private final Scanner input;
     private final Random random;
+    private static final int EMPTY = -1;
+    private static final int HUMAN = 0;
+    private static final int AI = 1;
 
     public TicTacToe(Scanner input, Random random) {
         this.input = input;
@@ -48,7 +51,7 @@ public class TicTacToe {
         }
         for (int[] ints : field) {
             for (int anInt : ints) {
-                if (anInt == -1) return false;
+                if (anInt == EMPTY) return false;
             }
 
         }
@@ -58,29 +61,39 @@ public class TicTacToe {
     public int[][] createField() {
         int[][] field = new int[3][3];
         for (int[] ints : field) {
-            Arrays.fill(ints, -1);
+            Arrays.fill(ints, EMPTY);
         }
         return field;
     }
 
     public Move getNextMove(int[][] field) {
-        while (true) {
-            System.out.println("Choose Y position on the field - 0,1 or 2");
-            int y = input.nextInt();
-            while (y < 0 || y > 2) {
-                y = input.nextInt();
-            }
-            System.out.println("Choose X position on the field - 0,1 or 2");
-            int x = input.nextInt();
-            while (x < 0 || x > 2) {
-                x = input.nextInt();
-            }
-            if (field[y][x] == -1) {
+        while(true) {
+           int y = readCoordinate("Y");
+           int x = readCoordinate("X");
+
+            if (field[y][x] == EMPTY) {
                 return new Move(y, x);
             }
             System.out.println("This cell is already taken. Choose another one.");
         }
     }
+
+    private int readCoordinate(String axis){
+        while (true) {
+            System.out.println("Choose " + axis + " position on the field - 0,1 or 2");
+            while ((!input.hasNextInt())) {
+                input.next();
+                System.out.println("Input only numbers!");
+            }
+            int value = input.nextInt();
+            if (value >= 0 && value < 3){
+                return value;
+            }
+            System.out.println("Input numbers in range!");
+        }
+    }
+
+
 
     private String cell(int a) {
         if (a == -1) return "⏹️";
@@ -88,7 +101,7 @@ public class TicTacToe {
         return "⭕";
     }
 
-    public void printFieldToConsole(int[][] field) {
+    private void printFieldToConsole(int[][] field) {
         for (int[] ints : field) {
             for (int anInt : ints) {
                 System.out.print(cell(anInt) + " ");
@@ -101,31 +114,42 @@ public class TicTacToe {
         AiPlayer aiPlayer = new AiPlayer(random, this);
         int[][] field = createField();
         printFieldToConsole(field);
-        while (true) {
-            Move human = getNextMove(field);
-            field[human.getMoveY()][human.getMoveX()] = 0;
-            printFieldToConsole(field);
-            if (isWinPosition(field, 0)) {
-                System.out.println("Human WINS!");
+        while (true){
+            playHuman(field);
+            if (gameOver(field, "Human ", HUMAN)){
                 break;
             }
-            if (isDrawPosition(field)) {
-                System.out.println("DRAW!");
-                break;
-            }
-            System.out.println();
-            System.out.println("AI turn");
-            Move ai = aiPlayer.chooseMove(field);
-            field[ai.getMoveY()][ai.getMoveX()] = 1;
-            printFieldToConsole(field);
-            if (isWinPosition(field, 1)) {
-                System.out.println("AI WINS!");
-                break;
-            }
-            if (isDrawPosition(field)) {
-                System.out.println("DRAW!");
+            playAi(field, aiPlayer.chooseMove(field));
+            if (gameOver(field, "AI ", AI)){
                 break;
             }
         }
     }
+
+    public boolean gameOver(int[][] field, String player, int turn){
+        if (isWinPosition(field, turn)) {
+            System.out.println(player + "WINS!");
+            return true;
+        }
+        if (isDrawPosition(field)) {
+            System.out.println("DRAW!");
+            return true;
+        }
+        System.out.println();
+        return false;
+    }
+
+    public void playHuman(int[][] field) {
+        System.out.println("Your turn");
+        Move human = getNextMove(field);
+        field[human.getMoveY()][human.getMoveX()] = HUMAN;
+        printFieldToConsole(field);
+    }
+
+    public void playAi(int[][] field, Move aiMove){
+        System.out.println("AI turn");
+        field[aiMove.getMoveY()][aiMove.getMoveX()] = AI;
+        printFieldToConsole(field);
+    }
+
 }

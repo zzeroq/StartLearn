@@ -1,6 +1,5 @@
 package vladislavs.uhovs.lesson6.homework.level5.task22;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
