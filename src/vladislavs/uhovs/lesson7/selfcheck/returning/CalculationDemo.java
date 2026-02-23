@@ -1,47 +1,42 @@
 package vladislavs.uhovs.lesson7.selfcheck.returning;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class CalculationDemo {
-    public static void main(String[] args) {
+    private static int correctInput(Scanner input){
+        while (!input.hasNextInt()){
+            input.next();
+            System.out.println("Wrong input. Input only numbers!");
+        }
+        return input.nextInt();
+    }
 
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Calculation calculation = new Calculation();
 
         int firstNumber;
         String operator;
         int secondNumber;
+        Set<String> allowed = Set.of("+", "-", "*", "/", "%");
 
         System.out.println("Input first number");
-        while (!input.hasNextInt()){
-            input.next();
-            System.out.println("Wrong input. Input only numbers!");
-        }
-        firstNumber = input.nextInt();
-        System.out.println("Input operator +,/,-,*");
+        firstNumber = correctInput(input);
+        System.out.println("Input operator: [+], [/], [-], [*], [%]");
         operator = input.next();
-        while (!operator.equals("+") && !operator.equals("/") && !operator.equals("-") && !operator.equals("*")){
+        while (!allowed.contains(operator)){
             System.out.println("Wrong operator input, input again");
             operator = input.next();
         }
 
         System.out.println("Input second number");
-        while (!input.hasNextInt()){
-            input.next();
-            System.out.println("Wrong input. Input only numbers!");
-        }
-        secondNumber = input.nextInt();
+        secondNumber = correctInput(input);
         while (operator.equals("/") && secondNumber == 0){
             System.out.println("Can't divide by zero, input again");
-            secondNumber = input.nextInt();
+            secondNumber = correctInput(input);
         }
         input.close();
-        switch (operator) {
-            case "+" -> System.out.println(calculation.sum(firstNumber, secondNumber));
-            case "/" -> System.out.println(calculation.div(firstNumber, secondNumber));
-            case "-" -> System.out.println(calculation.sub(firstNumber, secondNumber));
-            case "*" -> System.out.println(calculation.mul(firstNumber, secondNumber));
-        }
+        System.out.println(calculation.calculate(firstNumber, secondNumber, operator));
     }
 }
