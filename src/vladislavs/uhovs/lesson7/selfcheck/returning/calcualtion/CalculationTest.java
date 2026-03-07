@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson7.selfcheck.returning;
+package vladislavs.uhovs.lesson7.selfcheck.returning.calcualtion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

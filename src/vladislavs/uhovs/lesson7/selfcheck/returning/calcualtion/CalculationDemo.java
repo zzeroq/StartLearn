@@ -1,4 +1,4 @@
-package vladislavs.uhovs.lesson7.selfcheck.returning;
+package vladislavs.uhovs.lesson7.selfcheck.returning.calcualtion;
 
 import java.util.Scanner;
 import java.util.Set;
