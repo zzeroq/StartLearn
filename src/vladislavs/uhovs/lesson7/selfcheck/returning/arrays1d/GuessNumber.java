@@ -1,9 +1,45 @@
 package vladislavs.uhovs.lesson7.selfcheck.returning.arrays1d;
 
+import java.util.Random;
+
 public class GuessNumber {
 
-    public int[] arraysToFill(){
-        return new int[5];
+    public void arrayFindNumberFilled(int[] findNumber){
+        Random random = new Random();
+        for (int i = 0; i < findNumber.length; i++) {
+            findNumber[i] = random.nextInt(10);
+        }
+    }
+
+    public boolean ifGuess(int[] findNumber, int iteration, int inputGuess) {
+        return findNumber[iteration] == inputGuess;
+    }
+
+    public boolean tooSmall(int[] findNumber, int iteration, int inputGuess) {
+        return findNumber[iteration] > inputGuess;
+    }
+
+    public boolean inRange(int guess){
+        return  guess > 9 || guess < 0;
+    }
+    public boolean ifLose(int countTries, int maxTries){
+        return countTries == maxTries;
+    }
+
+    public boolean ifWin(int count, int length){
+        return  count == length;
+    }
+
+    public String mask(int[] toFindNumber, int foundNumbers){
+        StringBuilder mask = new StringBuilder();
+        for (int i = 0; i < toFindNumber.length; i++) {
+            if (toFindNumber[i] == foundNumbers) {
+                mask.append(toFindNumber[i]).append(" ");
+            } else {
+                mask.append("❌ ");
+            }
+        }
+        return mask.toString().trim();
     }
 
 

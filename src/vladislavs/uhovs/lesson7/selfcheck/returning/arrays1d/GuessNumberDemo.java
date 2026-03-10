@@ -1,61 +1,63 @@
 package vladislavs.uhovs.lesson7.selfcheck.returning.arrays1d;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumberDemo {
     public static void main(String[] args) {
-
-        Random random = new Random();
         Scanner input = new Scanner(System.in);
+        GuessNumber guessNumber = new GuessNumber();
 
         int[] findNumber = new int[5];
-        int[] fillNumber = new int[5];
-        boolean[] guessPosition = new boolean[5];
+        boolean[] guessPosition = new boolean[findNumber.length];
+        int count = 0;
+        int guess = 0;
 
-        for (int i = 0; i < findNumber.length; i++) {
-            findNumber[i] = random.nextInt(10);
-        }
-        System.out.println("Find 5 numbers from 0 to 9!");
+        guessNumber.arrayFindNumberFilled(findNumber);
+        System.out.println("Numbers to find was - " + Arrays.toString(findNumber));
+        System.out.println("Find " + findNumber.length +  " numbers from 0 to 9!");
         int maxTries = 5;
         for (int a = 0; a < maxTries; a++) {
             System.out.println("Tries left: " + (maxTries - a));
-            for (int i = 0; i < fillNumber.length; i++) {
+            for (int i = 0; i < findNumber.length; i++) {
                 if (guessPosition[i]){
                     continue;
                 }
                 System.out.println("Input number - " + (i + 1));
-                if (!input.hasNextInt()) {
-                    input.next();
-                    System.out.println("Wrong input! Input only numbers!");
-                    i--;
-                    continue;
+                boolean correctInput = false;
+                while (!correctInput) {
+                    if (!input.hasNextInt()) {
+                        input.next();
+                        System.out.println("Wrong input! Input only numbers!");
+                        continue;
+                    }
+                    guess = input.nextInt();
+                    if (guessNumber.inRange(guess)) {
+                        System.out.println("Wrong input! Input only numbers from 0 to 9!");
+                        continue;
+                    }
+                    correctInput = true;
                 }
-                fillNumber[i] = input.nextInt();
-                if (fillNumber[i] > 9 || fillNumber[i] < 0) {
-                    System.out.println("Wrong input! Input only numbers from 0 to 9!");
-                    i--;
-                    continue;
-                }
-                if (findNumber[i] == fillNumber[i]) {
+                if (guessNumber.ifGuess(findNumber, i, guess)) {
+                    count++;
                     guessPosition[i] = true;
                     System.out.println("You found the number");
-                } else if (findNumber[i] > fillNumber[i]) {
+                } else if (guessNumber.tooSmall(findNumber, i, guess)) {
                     System.out.println("Your number is too small");
                 } else {
                     System.out.println("Your number is too big");
                 }
             }
-            if (Arrays.equals(findNumber, fillNumber)){
-                System.out.println("Congratulation you won!");
+            if (guessNumber.ifWin(count, findNumber.length)){
+                System.out.println("Congratulation! You win!");
                 break;
-            }else if (a == maxTries - 1){
-                System.out.println("Sorry you lost!");
+            }else if (guessNumber.ifLose(a, maxTries - 1)){
+                System.out.println("Sorry, you lose!");
             }
+            System.out.println(guessNumber.mask(findNumber, guess));
         }
+        System.out.println(guessNumber.mask(findNumber, guess));
         input.close();
         System.out.println("Numbers to find was - " + Arrays.toString(findNumber));
-        System.out.println("Your last guess was - " + Arrays.toString(fillNumber));
     }
 }
