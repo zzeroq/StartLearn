@@ -11,17 +11,18 @@ public class GuessNumber {
         }
     }
 
-    public boolean ifGuess(int[] findNumber, int iteration, int inputGuess) {
-        return findNumber[iteration] == inputGuess;
+    public boolean ifGuess(int findNumber, int inputGuess) {
+        return findNumber == inputGuess;
     }
 
-    public boolean tooSmall(int[] findNumber, int iteration, int inputGuess) {
-        return findNumber[iteration] > inputGuess;
+    public boolean tooSmall(int findNumber, int inputGuess) {
+        return findNumber > inputGuess;
     }
 
     public boolean inRange(int guess){
         return  guess > 9 || guess < 0;
     }
+
     public boolean ifLose(int countTries, int maxTries){
         return countTries == maxTries;
     }
@@ -30,10 +31,10 @@ public class GuessNumber {
         return  count == length;
     }
 
-    public String mask(int[] toFindNumber, int foundNumbers){
+    public String mask(int[] toFindNumber, int[] foundNumbers){
         StringBuilder mask = new StringBuilder();
         for (int i = 0; i < toFindNumber.length; i++) {
-            if (toFindNumber[i] == foundNumbers) {
+            if (toFindNumber[i] == foundNumbers[i]) {
                 mask.append(toFindNumber[i]).append(" ");
             } else {
                 mask.append("❌ ");
@@ -41,8 +42,4 @@ public class GuessNumber {
         }
         return mask.toString().trim();
     }
-
-
-
-
 }

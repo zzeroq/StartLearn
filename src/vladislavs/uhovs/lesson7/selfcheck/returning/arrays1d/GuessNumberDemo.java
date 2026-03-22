@@ -11,7 +11,7 @@ public class GuessNumberDemo {
         int[] findNumber = new int[5];
         boolean[] guessPosition = new boolean[findNumber.length];
         int count = 0;
-        int guess = 0;
+        int[] guess = new int[5];
 
         guessNumber.arrayFindNumberFilled(findNumber);
         System.out.println("Numbers to find was - " + Arrays.toString(findNumber));
@@ -31,18 +31,19 @@ public class GuessNumberDemo {
                         System.out.println("Wrong input! Input only numbers!");
                         continue;
                     }
-                    guess = input.nextInt();
-                    if (guessNumber.inRange(guess)) {
+                    guess[i] = input.nextInt();
+                    if (guessNumber.inRange(guess[i])) {
                         System.out.println("Wrong input! Input only numbers from 0 to 9!");
                         continue;
                     }
                     correctInput = true;
                 }
-                if (guessNumber.ifGuess(findNumber, i, guess)) {
+                System.out.println(guessNumber.mask(findNumber, guess));
+                if (guessNumber.ifGuess(findNumber[i], guess[i])) {
                     count++;
                     guessPosition[i] = true;
                     System.out.println("You found the number");
-                } else if (guessNumber.tooSmall(findNumber, i, guess)) {
+                } else if (guessNumber.tooSmall(findNumber[i], guess[i])) {
                     System.out.println("Your number is too small");
                 } else {
                     System.out.println("Your number is too big");
@@ -54,9 +55,7 @@ public class GuessNumberDemo {
             }else if (guessNumber.ifLose(a, maxTries - 1)){
                 System.out.println("Sorry, you lose!");
             }
-            System.out.println(guessNumber.mask(findNumber, guess));
         }
-        System.out.println(guessNumber.mask(findNumber, guess));
         input.close();
         System.out.println("Numbers to find was - " + Arrays.toString(findNumber));
     }
