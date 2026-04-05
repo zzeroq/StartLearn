@@ -31,10 +31,10 @@ public class GuessNumber {
         return  count == length;
     }
 
-    public String mask(int[] toFindNumber, int[] foundNumbers){
+    public String mask(int[] toFindNumber, int[] inputNumber){
         StringBuilder mask = new StringBuilder();
         for (int i = 0; i < toFindNumber.length; i++) {
-            if (toFindNumber[i] == foundNumbers[i]) {
+            if (toFindNumber[i] == inputNumber[i]) {
                 mask.append(toFindNumber[i]).append(" ");
             } else {
                 mask.append("❌ ");
