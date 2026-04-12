@@ -8,8 +8,11 @@ public class WhileDoWhileLogic {
     public int withdrawAmount(int balance, int withdraw){
         return balance - withdraw;
     }
-    public boolean isWithdrawNegative(int withdraw){
-        return withdraw <= 0;
+    public boolean isInputNotPositive(int input){
+        return input <= 0;
+    }
+    public int depositAmount(int balance, int deposit){
+        return balance + deposit;
     }
 
 }

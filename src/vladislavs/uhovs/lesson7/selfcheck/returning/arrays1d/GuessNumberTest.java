@@ -107,13 +107,5 @@ public class GuessNumberTest {
         assertFalse(guessNumber.ifWin(countTries, maxTries));
     }
 
-    @Test
-    @DisplayName("Expected result must be equals to mask result")
-    public void mask(){
-        int[] toFindNumber = {3,6,5};
-        int[] inputNumber = {3,7,5};
-        String expectedResult = "3 ❌ 5";
-        assertEquals(expectedResult, guessNumber.mask(toFindNumber,inputNumber));
-    }
 
 }

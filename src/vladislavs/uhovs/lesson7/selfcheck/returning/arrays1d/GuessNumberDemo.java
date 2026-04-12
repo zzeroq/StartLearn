@@ -38,7 +38,6 @@ public class GuessNumberDemo {
                     }
                     correctInput = true;
                 }
-                System.out.println(guessNumber.mask(findNumber, guess));
                 if (guessNumber.ifGuess(findNumber[i], guess[i])) {
                     count++;
                     guessPosition[i] = true;
@@ -48,6 +47,7 @@ public class GuessNumberDemo {
                 } else {
                     System.out.println("Your number is too big");
                 }
+                System.out.println(guessNumber.mask(findNumber, guessPosition));
             }
             if (guessNumber.ifWin(count, findNumber.length)){
                 System.out.println("Congratulation! You win!");
