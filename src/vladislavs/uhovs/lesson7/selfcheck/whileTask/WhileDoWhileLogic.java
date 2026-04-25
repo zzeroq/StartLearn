@@ -5,14 +5,14 @@ public class WhileDoWhileLogic {
     public boolean isEnoughBalance(int balance, int withdraw){
         return balance >= withdraw;
     }
+    public int depositAmount(int balance, int deposit){
+        return balance + deposit;
+    }
     public int withdrawAmount(int balance, int withdraw){
         return balance - withdraw;
     }
     public boolean isInputNotPositive(int input){
         return input <= 0;
-    }
-    public int depositAmount(int balance, int deposit){
-        return balance + deposit;
     }
 
 }
