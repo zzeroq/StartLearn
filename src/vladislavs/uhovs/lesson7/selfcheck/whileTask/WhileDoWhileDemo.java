@@ -19,8 +19,6 @@ public class WhileDoWhileDemo {
         return transaction;
     }
 
-
-
     private static int depositWithdrawTransaction(int balance, Scanner scanner, String depositOrWithdraw ) {
         WhileDoWhileLogic whileDoWhileLogic = new WhileDoWhileLogic();
         do {
