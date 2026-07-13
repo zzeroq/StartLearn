@@ -19,7 +19,7 @@ public class SlotMachine {
         return balance + deposit;
     }
 
-    public int winingMoney(int balance, int spinCost, int multiply){
+    public int winningMoney(int balance, int spinCost, int multiply){
         return spinCost * multiply + balance;
     }
 

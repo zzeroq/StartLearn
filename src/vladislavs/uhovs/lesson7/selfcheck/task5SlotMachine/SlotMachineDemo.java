@@ -38,7 +38,9 @@ public class SlotMachineDemo {
 
 
         do {
-            System.out.println("Press 1 to play, 2 to cashout");
+            System.out.println("Press 1 to play, 2 to cashout, 3 to change spin cost");
+            System.out.println("Spin Cost: " + spinCost);
+            System.out.println("Cashout: " + balance);
             int ifPlayYes = input.nextInt();
             if (ifPlayYes == 1 && balance > 1) {
                 slotMachine.slots(fruit, result, random);
@@ -55,24 +57,28 @@ public class SlotMachineDemo {
                     }
                 }
                 if (count == 5){
-                    balance = slotMachine.winingMoney(balance, spinCost, 2500);
-                    System.out.println("Won:" + (spinCost * 2500));
+                    balance = slotMachine.winningMoney(balance, spinCost, 93);
+                    System.out.println("Won:" + (spinCost * 93));
                     System.out.println("Balance now: " + balance);
                 } else if (count == 4){
-                    balance = slotMachine.winingMoney(balance, spinCost, 550);
-                    System.out.println("Won:" + (spinCost * 550));
+                    balance = slotMachine.winningMoney(balance, spinCost, 50);
+                    System.out.println("Won:" + (spinCost * 50));
                     System.out.println("Balance now: " + balance);
                 } else if (count == 3){
-                    balance = slotMachine.winingMoney(balance, spinCost, 105);
-                    System.out.println("Won:" + (spinCost * 105));
+                    balance = slotMachine.winningMoney(balance, spinCost, 5);
+                    System.out.println("Won:" + (spinCost * 5));
                     System.out.println("Balance now: " + balance);
                 } else if (count == 2) {
-                    balance = slotMachine.winingMoney(balance, spinCost, 15);
-                    System.out.println("Won:" + (spinCost * 15));
+                    balance = slotMachine.winningMoney(balance, spinCost, 2);
+                    System.out.println("Won:" + (spinCost * 2));
                     System.out.println("Balance now: " + balance);
                 }
                 System.out.println(count);
-            }else{
+            } else if (ifPlayYes == 3) {
+                System.out.println("Input spin cost");
+                spinCost = input.nextInt();
+                isPositiveResult = true;
+            } else{
                 System.out.println("Thank you for playing");
                 System.out.println("You won: " + balance);
                 isPositiveResult = false;
