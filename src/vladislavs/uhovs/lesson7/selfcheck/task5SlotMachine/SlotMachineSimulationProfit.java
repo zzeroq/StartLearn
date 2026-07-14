@@ -12,8 +12,9 @@ public class SlotMachineSimulationProfit {
         String[] result = new String[5];
         Random random = new Random();
         SlotMachine slotMachine = new SlotMachine();
-        int startingBalance = 100000000;
-        int balance = 100000000;
+        int startingBalance = 10000000;
+        int balance = 10000000;
+        int simulationTries = 100000000;
         int win2 = 0;
         int win3 = 0;
         int win4 = 0;
@@ -48,8 +49,8 @@ public class SlotMachineSimulationProfit {
                 win2++;
             }
 
-        } while (count2 < 100000000);
-        double RTP = ((double) balance / startingBalance) * 100;
+        } while (count2 < simulationTries);
+        double RTP = ((double) balance / simulationTries) * 100;
         double houseEdge = ((double) 100 - RTP);
         System.out.println("Balance after 100 mil try's: " + balance);
         System.out.println("Casino PROFIT: " + (startingBalance - balance));

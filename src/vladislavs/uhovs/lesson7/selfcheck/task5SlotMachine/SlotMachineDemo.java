@@ -36,7 +36,6 @@ public class SlotMachineDemo {
 
         } while (isPositiveResult);
 
-
         do {
             System.out.println("Press 1 to play, 2 to cashout, 3 to change spin cost");
             System.out.println("Spin Cost: " + spinCost);
