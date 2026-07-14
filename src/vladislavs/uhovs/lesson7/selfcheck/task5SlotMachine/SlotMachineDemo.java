@@ -21,7 +21,7 @@ public class SlotMachineDemo {
             System.out.println("To play, you need to deposit minimum 10 usd, press D if you want to deposit more");
             System.out.println("After deposit press any key to play slot machine");
             String isDepositYes = input.next();
-            if (isDepositYes.equalsIgnoreCase("D")){
+            if (isDepositYes.equalsIgnoreCase("D")) {
                 System.out.println("Deposit amount");
                 while (!input.hasNextInt()) {
                     input.next();
@@ -30,11 +30,11 @@ public class SlotMachineDemo {
                 int deposit = input.nextInt();
                 balance = slotMachine.deposit(balance, deposit);
                 System.out.println("Your balance: " + balance);
-            } else if (balance >= 10){
+            } else if (balance >= 10) {
                 isPositiveResult = false;
             }
 
-        }while(isPositiveResult);
+        } while (isPositiveResult);
 
 
         do {
@@ -50,21 +50,21 @@ public class SlotMachineDemo {
                 System.out.println(Arrays.toString(result));
                 int count = 1;
                 for (int i = 0; i < result.length - 1; i++) {
-                    if (result[i].equals(result[i + 1])){
+                    if (result[i].equals(result[i + 1])) {
                         count++;
-                    }else {
+                    } else {
                         break;
                     }
                 }
-                if (count == 5){
+                if (count == 5) {
                     balance = slotMachine.winningMoney(balance, spinCost, 93);
                     System.out.println("Won:" + (spinCost * 93));
                     System.out.println("Balance now: " + balance);
-                } else if (count == 4){
+                } else if (count == 4) {
                     balance = slotMachine.winningMoney(balance, spinCost, 50);
                     System.out.println("Won:" + (spinCost * 50));
                     System.out.println("Balance now: " + balance);
-                } else if (count == 3){
+                } else if (count == 3) {
                     balance = slotMachine.winningMoney(balance, spinCost, 5);
                     System.out.println("Won:" + (spinCost * 5));
                     System.out.println("Balance now: " + balance);
@@ -78,11 +78,11 @@ public class SlotMachineDemo {
                 System.out.println("Input spin cost");
                 spinCost = input.nextInt();
                 isPositiveResult = true;
-            } else{
+            } else {
                 System.out.println("Thank you for playing");
                 System.out.println("You won: " + balance);
                 isPositiveResult = false;
             }
-        }while (isPositiveResult);
+        } while (isPositiveResult);
     }
 }
