@@ -9,7 +9,7 @@ public class SlotMachineSimulationProfit {
         int count = 1;
         int count2 = 0;
         String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
-        String[] result = new String[5];
+        String[][] result = new String[5][5];
         Random random = new Random();
         SlotMachine slotMachine = new SlotMachine();
         int startingBalance = 10000000;
@@ -24,14 +24,16 @@ public class SlotMachineSimulationProfit {
         do {
             count = 1;
             count2++;
-            slotMachine.slots(fruit, result, random);
+            slotMachine.slots(fruit, result, random, 5, 5);
             balance = slotMachine.spinCost(balance, spinCost);
 
-            for (int i = 0; i < result.length - 1; i++) {
-                if (result[i].equals(result[i + 1])) {
-                    count++;
-                } else {
-                    break;
+            for (int r = 0; r < result.length - 1; r++) {
+                for (int c = 0; c < result.length - 1; c++) {
+                    if (result[r][c].equals(result[r + 1][c + 1])) {
+                        count++;
+                    } else {
+                        break;
+                    }
                 }
             }
 

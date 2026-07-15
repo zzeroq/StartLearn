@@ -9,13 +9,15 @@ public class SlotMachineDemo {
     public static void main(String[] args) {
 
         String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
-        String[] result = new String[5];
+        String[][] result = new String[5][5];
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         boolean isPositiveResult = true;
         SlotMachine slotMachine = new SlotMachine();
         int balance = 0;
         int spinCost = 1;
+        int row = 5;
+        int column = 5;
 
         do {
             System.out.println("To play, you need to deposit minimum 10 usd, press D if you want to deposit more");
@@ -37,24 +39,36 @@ public class SlotMachineDemo {
         } while (isPositiveResult);
 
         do {
-            System.out.println("Press 1 to play, 2 to cashout, 3 to change spin cost");
+            System.out.println("Press 1 to SPIN, 2 to CASHOUT, 3 to CHANGE spin cost");
             System.out.println("Spin Cost: " + spinCost);
             System.out.println("Cashout: " + balance);
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Wrong input! Only numbers allowed, input again");
+            }
             int ifPlayYes = input.nextInt();
             if (ifPlayYes == 1 && balance > 1) {
-                slotMachine.slots(fruit, result, random);
+                slotMachine.slots(fruit, result, random, row, column);
                 balance = slotMachine.spinCost(balance, spinCost);
                 isPositiveResult = true;
                 System.out.println("Your balance: " + balance);
-                System.out.println(Arrays.toString(result));
+                for (String[] strings : result) {
+                    System.out.println(Arrays.toString(strings));
+                }
                 int count = 1;
-                for (int i = 0; i < result.length - 1; i++) {
-                    if (result[i].equals(result[i + 1])) {
-                        count++;
-                    } else {
-                        break;
+
+                for (int r = 0; r < row; r++) {
+                    count = 1;
+                    for (int c = 0; c < column - 1; c++) {
+                        if (result[r][c].equals(result[r][c + 1])) {
+                            count++;
+
+                        } else {
+                            break;
+                        }
                     }
                 }
+
                 if (count == 5) {
                     balance = slotMachine.winningMoney(balance, spinCost, 93);
                     System.out.println("Won:" + (spinCost * 93));
@@ -77,10 +91,13 @@ public class SlotMachineDemo {
                 System.out.println("Input spin cost");
                 spinCost = input.nextInt();
                 isPositiveResult = true;
-            } else {
+            } else if (ifPlayYes == 2) {
                 System.out.println("Thank you for playing");
                 System.out.println("You won: " + balance);
                 isPositiveResult = false;
+            } else {
+                System.out.println("Wrong input try again");
+                isPositiveResult = true;
             }
         } while (isPositiveResult);
     }

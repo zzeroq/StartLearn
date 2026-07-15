@@ -5,9 +5,11 @@ import java.util.Random;
 public class SlotMachine {
 
 
-    public void slots(String[] fruit, String[] result, Random random) {
-        for (int i = 0; i < result.length; i++) {
-            result[i] = fruit[random.nextInt(result.length)];
+    public void slots(String[] fruit, String[][] result, Random random, int row, int column) {
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < column; c++) {
+                result[r][c] = fruit[random.nextInt(result.length)];
+            }
         }
     }
 
