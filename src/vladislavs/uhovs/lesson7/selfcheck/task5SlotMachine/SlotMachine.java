@@ -13,16 +13,16 @@ public class SlotMachine {
         }
     }
 
-    public int spinCost(int balance, int spinCost) {
+    public long spinCostSubstraction(long balance, long spinCost) {
         return balance - spinCost;
     }
 
-    public int deposit(int balance, int deposit) {
+    public long deposit(long balance, long deposit) {
         return balance + deposit;
     }
 
-    public int winningMoney(int balance, int spinCost, int multiply) {
-        return spinCost * multiply + balance;
+    public long winningMoney(long balance, long lineWin, int multiply) {
+        return lineWin * multiply + balance;
     }
 
 

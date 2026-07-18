@@ -8,16 +8,17 @@ public class SlotMachineDemo {
 
     public static void main(String[] args) {
 
-        String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
+        String[] fruit = {"🍎", "🍌", "🍒", "💵", "💎"};
         String[][] result = new String[5][5];
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         boolean isPositiveResult = true;
         SlotMachine slotMachine = new SlotMachine();
-        int balance = 0;
-        int spinCost = 1;
+        long balance = 0;
+        long spinCost = 100;
         int row = 5;
         int column = 5;
+        int multiply = 1;
 
         do {
             System.out.println("To play, you need to deposit minimum 10 usd, press D if you want to deposit more");
@@ -30,8 +31,8 @@ public class SlotMachineDemo {
                     System.out.println("Wrong input! Only numbers allowed, input again");
                 }
                 int deposit = input.nextInt();
-                balance = slotMachine.deposit(balance, deposit);
-                System.out.println("Your balance: " + balance);
+                balance = slotMachine.deposit(balance, deposit) * 100;
+                System.out.println("Your balance: " + ((double) balance / 100) + " USD");
             } else if (balance >= 10) {
                 isPositiveResult = false;
             }
@@ -40,22 +41,22 @@ public class SlotMachineDemo {
 
         do {
             System.out.println("Press 1 to SPIN, 2 to CASHOUT, 3 to CHANGE spin cost");
-            System.out.println("Spin Cost: " + spinCost);
-            System.out.println("Cashout: " + balance);
+            System.out.println("Spin Cost: " + ((double) spinCost / 100) + " USD");
+            System.out.println("Cashout: " + ((double) balance / 100) + " USD");
             while (!input.hasNextInt()) {
                 input.next();
                 System.out.println("Wrong input! Only numbers allowed, input again");
             }
             int ifPlayYes = input.nextInt();
-            if (ifPlayYes == 1 && balance > 1) {
+            if (ifPlayYes == 1 && balance > spinCost) {
                 slotMachine.slots(fruit, result, random, row, column);
-                balance = slotMachine.spinCost(balance, spinCost);
+                balance = slotMachine.spinCostSubstraction(balance, spinCost);
                 isPositiveResult = true;
-                System.out.println("Your balance: " + balance);
+                System.out.println("Your balance: " + ((double) balance / 100) + " USD");
                 for (String[] strings : result) {
                     System.out.println(Arrays.toString(strings));
                 }
-                int count = 1;
+                int count;
 
                 for (int r = 0; r < row; r++) {
                     count = 1;
@@ -67,34 +68,36 @@ public class SlotMachineDemo {
                             break;
                         }
                     }
+                    if (count == 5) {
+                        balance = slotMachine.winningMoney(balance, 1860, multiply);
+                        System.out.println("Won:" + ((double) spinCost * 18.60 / 100) + " USD");
+                        System.out.println("Balance now: " + ((double) balance / 100) + " USD");
+                    } else if (count == 4) {
+                        balance = slotMachine.winningMoney(balance, 1000, multiply);
+                        System.out.println("Won:" + ((double) spinCost * 10 / 100) + " USD");
+                        System.out.println("Balance now: " + ((double) balance / 100) + " USD");
+                    } else if (count == 3) {
+                        balance = slotMachine.winningMoney(balance, 100, multiply);
+                        System.out.println("Won:" + ((double) spinCost * 1 / 100) + " USD");
+                        System.out.println("Balance now: " + ((double) balance / 100) + " USD");
+                    } else if (count == 2) {
+                        balance = slotMachine.winningMoney(balance, 40, multiply);
+                        System.out.println("Won:" + ((double) spinCost * 0.40 / 100) + " USD");
+                        System.out.println("Balance now: " + ((double) balance / 100) + " USD");
+                    }
                 }
 
-                if (count == 5) {
-                    balance = slotMachine.winningMoney(balance, spinCost, 93);
-                    System.out.println("Won:" + (spinCost * 93));
-                    System.out.println("Balance now: " + balance);
-                } else if (count == 4) {
-                    balance = slotMachine.winningMoney(balance, spinCost, 50);
-                    System.out.println("Won:" + (spinCost * 50));
-                    System.out.println("Balance now: " + balance);
-                } else if (count == 3) {
-                    balance = slotMachine.winningMoney(balance, spinCost, 5);
-                    System.out.println("Won:" + (spinCost * 5));
-                    System.out.println("Balance now: " + balance);
-                } else if (count == 2) {
-                    balance = slotMachine.winningMoney(balance, spinCost, 2);
-                    System.out.println("Won:" + (spinCost * 2));
-                    System.out.println("Balance now: " + balance);
-                }
-                System.out.println(count);
             } else if (ifPlayYes == 3) {
                 System.out.println("Input spin cost");
-                spinCost = input.nextInt();
+                multiply = input.nextInt();
+                spinCost = 100L * multiply;
                 isPositiveResult = true;
             } else if (ifPlayYes == 2) {
                 System.out.println("Thank you for playing");
-                System.out.println("You won: " + balance);
+                System.out.println("You won: " + ((double) balance / 100) + " USD");
                 isPositiveResult = false;
+            } else if (spinCost > balance) {
+                System.out.println("Not enough funds");
             } else {
                 System.out.println("Wrong input try again");
                 isPositiveResult = true;
