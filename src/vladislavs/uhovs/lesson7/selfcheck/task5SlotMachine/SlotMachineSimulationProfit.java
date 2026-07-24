@@ -3,6 +3,16 @@ package vladislavs.uhovs.lesson7.selfcheck.task5SlotMachine;
 import java.util.Random;
 
 public class SlotMachineSimulationProfit {
+
+    private static final int TWO_ROW_WIN = 40;
+    private static final int THREE_ROW_WIN = 100;
+    private static final int FOUR_ROW_WIN = 1000;
+    private static final int FIVE_ROW_WIN = 1860;
+    private static final int WHOLE_PERCENTAGE = 100;
+    private static final int SLOT_ROWS = 5;
+    private static final int SLOT_COLUMNS = 5;
+
+
     public static void main(String[] args) {
 
         long spinCost = 100;
@@ -11,25 +21,24 @@ public class SlotMachineSimulationProfit {
         String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
         String[][] result = new String[5][5];
         Random random = new Random();
-        SlotMachine slotMachine = new SlotMachine();
         long startingBalance = 100000000;
         long balance = 100000000;
-        long simulationTries = 100000000;
+        long simulationTries = 10000000;
         int win2 = 0;
         int win3 = 0;
         int win4 = 0;
         int win5 = 0;
         int multiply = 1;
-
+        SlotMachine slotMachine = new SlotMachine(balance, spinCost);
 
         do {
             count2++;
-            slotMachine.slots(fruit, result, random, 5, 5);
-            balance = slotMachine.spinCostSubstraction(balance, spinCost);
+            slotMachine.slots(fruit, result, random, SLOT_ROWS, SLOT_COLUMNS);
+            balance -= spinCost;
 
-            for (int r = 0; r < 5; r++) {
+            for (int r = 0; r < SLOT_ROWS; r++) {
                 count = 1;
-                for (int c = 0; c < 5 - 1; c++) {
+                for (int c = 0; c < SLOT_COLUMNS - 1; c++) {
                     if (result[r][c].equals(result[r][c + 1])) {
                         count++;
 
@@ -38,16 +47,16 @@ public class SlotMachineSimulationProfit {
                     }
                 }
                 if (count == 5) {
-                    balance = slotMachine.winningMoney(balance, 1860, multiply);
+                    slotMachine.winningMoney(FIVE_ROW_WIN, multiply);
                     win5++;
                 } else if (count == 4) {
-                    balance = slotMachine.winningMoney(balance, 1000, multiply);
+                    slotMachine.winningMoney(FOUR_ROW_WIN, multiply);
                     win4++;
                 } else if (count == 3) {
-                    balance = slotMachine.winningMoney(balance, 100, multiply);
+                    slotMachine.winningMoney(THREE_ROW_WIN, multiply);
                     win3++;
                 } else if (count == 2) {
-                    balance = slotMachine.winningMoney(balance,40,multiply);
+                    slotMachine.winningMoney(TWO_ROW_WIN,multiply);
                     win2++;
                 }
             }
@@ -58,8 +67,8 @@ public class SlotMachineSimulationProfit {
         balance = startingBalance - totalBet + totalPayout;
 
         double RTP = ((double) totalPayout / totalBet) * 100;
-        double houseEdge = ((double) 100 - RTP);
-        System.out.println("Balance after 100 mil try's: " + balance);
+        double houseEdge = ((double) WHOLE_PERCENTAGE - RTP);
+        System.out.println("Balance after simulation ty's: " + balance);
         System.out.println("Casino PROFIT: " + (startingBalance - balance));
         System.out.printf("House edge: %.2f%%%n", houseEdge);
         System.out.printf("RTP: %.2f%%%n", RTP);

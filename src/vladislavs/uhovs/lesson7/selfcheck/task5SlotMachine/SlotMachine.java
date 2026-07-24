@@ -4,26 +4,48 @@ import java.util.Random;
 
 public class SlotMachine {
 
+    private long balance;
+    private long spinCost;
+
+    public SlotMachine(long balance, long spinCost) {
+        this.balance = balance;
+        this.spinCost = spinCost;
+    }
+
+    public long getSpinCost() {
+        return spinCost;
+    }
+
+    public long getBalance() {
+        return balance;
+    }
+
+    public void changeSpinCost (long startSpinCost, int multiply) {
+        spinCost = startSpinCost * multiply;
+    }
 
     public void slots(String[] fruit, String[][] result, Random random, int row, int column) {
         for (int r = 0; r < row; r++) {
             for (int c = 0; c < column; c++) {
-                result[r][c] = fruit[random.nextInt(result.length)];
+                result[r][c] = fruit[random.nextInt(fruit.length)];
             }
         }
     }
 
-    public long spinCostSubstraction(long balance, long spinCost) {
-        return balance - spinCost;
+    public void spinCostDeduct() {
+        balance -= spinCost;
     }
 
-    public long deposit(long balance, long deposit) {
-        return balance + deposit;
+    public void winningMoney(long lineWin, int multiply) {
+        balance += lineWin * multiply;
     }
 
-    public long winningMoney(long balance, long lineWin, int multiply) {
-        return lineWin * multiply + balance;
+    public void deposit(long amount) {
+        balance += amount;
     }
 
+    public double centsToUSD(long cents) {
+        return (double) cents / 100;
+    }
 
 }
