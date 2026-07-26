@@ -29,11 +29,11 @@ public class SlotMachineSimulationProfit {
         int win4 = 0;
         int win5 = 0;
         int multiply = 1;
-        SlotMachine slotMachine = new SlotMachine(balance, spinCost);
+        SlotMachine slotMachine = new SlotMachine(balance, spinCost, fruit, result, random);
 
         do {
             count2++;
-            slotMachine.slots(fruit, result, random, SLOT_ROWS, SLOT_COLUMNS);
+            slotMachine.slots();
             balance -= spinCost;
 
             for (int r = 0; r < SLOT_ROWS; r++) {
@@ -56,7 +56,7 @@ public class SlotMachineSimulationProfit {
                     slotMachine.winningMoney(THREE_ROW_WIN, multiply);
                     win3++;
                 } else if (count == 2) {
-                    slotMachine.winningMoney(TWO_ROW_WIN,multiply);
+                    slotMachine.winningMoney(TWO_ROW_WIN, multiply);
                     win2++;
                 }
             }

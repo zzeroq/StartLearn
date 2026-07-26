@@ -1,6 +1,5 @@
 package vladislavs.uhovs.lesson7.selfcheck.task5SlotMachine;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,25 +12,44 @@ public class SlotMachineDemo {
     private static final int THREE_ROW_WIN = 100;
     private static final int FOUR_ROW_WIN = 1000;
     private static final int FIVE_ROW_WIN = 1860;
-    private static final int MINIMUM_BALANCE = 10;
+    private static final int MINIMUM_BALANCE_CENTS = 1000;
     private static final long START_SPIN_COST = 100;
     private static final int TWO_EVEN_SYMBOLS_COUNT = 2;
     private static final int THREE_EVEN_SYMBOLS_COUNT = 3;
     private static final int FOUR_EVEN_SYMBOLS_COUNT = 4;
     private static final int FIVE_EVEN_SYMBOLS_COUNT = 5;
 
+    private static long depositAmount(Scanner input) {
+        long value;
+        System.out.println("Deposit amount");
+        do {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
+            }
+            value = input.nextInt();
+            if (value < 0) {
+                System.out.println("You can't deposit a negative amount");
+            } else if (value == 0) {
+                System.out.println("You can't deposit zero");
+            }
+        } while (value <= 0);
+        return value;
+    }
+
+
     public static void main(String[] args) {
 
         String[] fruit = {"🍎", "🍌", "🍒", "💵", "💎"};
+
 
         String[][] result = new String[SLOT_ROWS][SLOT_COLUMNS];
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         boolean continueGame = true;
+        SlotMachine slotMachine = new SlotMachine(0, START_SPIN_COST, fruit, result, random);
 
         int multiply = 1;
-        long deposit;
-        SlotMachine slotMachine = new SlotMachine(0, START_SPIN_COST);
 
         do {
             System.out.println("You need a minimum balance of 10 USD to play, press D if you want to deposit more");
@@ -39,21 +57,8 @@ public class SlotMachineDemo {
             System.out.println("Your balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
             String depositChoice = input.next();
             if (depositChoice.equalsIgnoreCase("D")) {
-                System.out.println("Deposit amount");
-                do {
-                    while (!input.hasNextInt()) {
-                        input.next();
-                        System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
-                    }
-                    deposit = input.nextInt();
-                    if (deposit < 0) {
-                        System.out.println("You can't deposit a negative amount");
-                    } else if (deposit == 0) {
-                        System.out.println("You can't deposit zero");
-                    }
-                } while (deposit <= 0);
-                slotMachine.deposit(deposit * CENTS_IN_USD);
-            } else if (slotMachine.getBalance() >= MINIMUM_BALANCE && depositChoice.equalsIgnoreCase("S")) {
+                slotMachine.deposit(depositAmount(input) * CENTS_IN_USD);
+            } else if (slotMachine.getBalance() >= MINIMUM_BALANCE_CENTS && depositChoice.equalsIgnoreCase("S")) {
                 continueGame = false;
             }
         } while (continueGame);
@@ -61,19 +66,29 @@ public class SlotMachineDemo {
         do {
             System.out.println("Press 1 to SPIN, 2 to CHANGE spin cost, 3 to CASHOUT, 4 to DEPOSIT");
             System.out.println("Spin Cost: " + ((double) slotMachine.getSpinCost() / CENTS_IN_USD) + " USD");
-            System.out.println("Cashout: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
             while (!input.hasNextInt()) {
                 input.next();
                 System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
             }
             int menuChoice = input.nextInt();
             if (menuChoice == 1 && slotMachine.getBalance() >= slotMachine.getSpinCost()) {
-                slotMachine.slots(fruit, result, random, SLOT_ROWS, SLOT_COLUMNS);
+                slotMachine.slots();
                 slotMachine.spinCostDeduct();
+                long balanceBeforeWins = slotMachine.getBalance();
                 continueGame = true;
-                System.out.println("Your balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
-                for (String[] strings : result) {
-                    System.out.println(Arrays.toString(strings));
+                for (int r = 0; r < SLOT_ROWS; r++) {
+                    for (int c = 0; c < SLOT_COLUMNS; c++) {
+                        System.out.print(result[r][c]);
+                        if (c < SLOT_COLUMNS - 1) {
+                            System.out.print(" ");
+                        }
+                    }
+                    System.out.println();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
                 int count;
 
@@ -89,22 +104,16 @@ public class SlotMachineDemo {
                     }
                     if (count == FIVE_EVEN_SYMBOLS_COUNT) {
                         slotMachine.winningMoney(FIVE_ROW_WIN, multiply);
-                        System.out.println("Won: " + ((double) slotMachine.getSpinCost() / CENTS_IN_USD * FIVE_ROW_WIN / CENTS_IN_USD) + " USD");
-                        System.out.println("Balance now: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
                     } else if (count == FOUR_EVEN_SYMBOLS_COUNT) {
                         slotMachine.winningMoney(FOUR_ROW_WIN, multiply);
-                        System.out.println("Won: " + (((double) slotMachine.getSpinCost() / CENTS_IN_USD) * (FOUR_ROW_WIN / CENTS_IN_USD)) + " USD");
-                        System.out.println("Balance now: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
                     } else if (count == THREE_EVEN_SYMBOLS_COUNT) {
                         slotMachine.winningMoney(THREE_ROW_WIN, multiply);
-                        System.out.println("Won: " + ((double) slotMachine.getSpinCost() / CENTS_IN_USD * THREE_ROW_WIN / CENTS_IN_USD) + " USD");
-                        System.out.println("Balance now: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
                     } else if (count == TWO_EVEN_SYMBOLS_COUNT) {
                         slotMachine.winningMoney(TWO_ROW_WIN, multiply);
-                        System.out.println("Won: " + ((double) slotMachine.getSpinCost() / CENTS_IN_USD * TWO_ROW_WIN / CENTS_IN_USD) + " USD");
-                        System.out.println("Balance now: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
                     }
                 }
+                System.out.println("Won: " + (slotMachine.centsToUSD(slotMachine.getBalance() - balanceBeforeWins)) + " USD");
+                System.out.println("Balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
 
             } else if (menuChoice == 2) {
                 System.out.println("Input spin cost");
@@ -130,20 +139,8 @@ public class SlotMachineDemo {
                 System.out.println("You won: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
                 continueGame = false;
             } else if (menuChoice == 4) {
-                System.out.println("Deposit amount");
-                do {
-                    while (!input.hasNextInt()) {
-                        input.next();
-                        System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
-                    }
-                    deposit = input.nextInt();
-                    if (deposit < 0) {
-                        System.out.println("You can't deposit a negative amount");
-                    } else if (deposit == 0) {
-                        System.out.println("You can't deposit zero");
-                    }
-                } while (deposit <= 0);
-                slotMachine.deposit(deposit * CENTS_IN_USD);
+                slotMachine.deposit(depositAmount(input) * CENTS_IN_USD);
+                continueGame = true;
             } else if (slotMachine.getSpinCost() > slotMachine.getBalance()) {
                 System.out.println("Not enough funds");
             } else {

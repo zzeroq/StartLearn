@@ -6,14 +6,25 @@ public class SlotMachine {
 
     private long balance;
     private long spinCost;
+    private final String[] fruit;
+    private final String[][] result;
+    private final Random random;
 
-    public SlotMachine(long balance, long spinCost) {
+
+    public SlotMachine(long balance, long spinCost, String[] fruit, String[][] result, Random random) {
         this.balance = balance;
         this.spinCost = spinCost;
+        this.fruit = fruit;
+        this.result = result;
+        this.random = random;
     }
 
     public long getSpinCost() {
         return spinCost;
+    }
+
+    public String[][] getResult() {
+        return result;
     }
 
     public long getBalance() {
@@ -24,9 +35,9 @@ public class SlotMachine {
         spinCost = startSpinCost * multiply;
     }
 
-    public void slots(String[] fruit, String[][] result, Random random, int row, int column) {
-        for (int r = 0; r < row; r++) {
-            for (int c = 0; c < column; c++) {
+    public void slots() {
+        for (int r = 0; r < result.length; r++) {
+            for (int c = 0; c < result[r].length; c++) {
                 result[r][c] = fruit[random.nextInt(fruit.length)];
             }
         }
