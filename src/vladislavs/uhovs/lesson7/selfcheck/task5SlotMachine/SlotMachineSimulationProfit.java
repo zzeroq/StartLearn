@@ -29,7 +29,7 @@ public class SlotMachineSimulationProfit {
         int win4 = 0;
         int win5 = 0;
         int multiply = 1;
-        SlotMachine slotMachine = new SlotMachine(balance, spinCost, fruit, result, random);
+        SlotMachine slotMachine = new SlotMachine(balance, spinCost, fruit, result, random,multiply);
 
         do {
             count2++;
