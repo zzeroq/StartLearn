@@ -47,16 +47,16 @@ public class SlotMachineSimulationProfit {
                     }
                 }
                 if (count == 5) {
-                    slotMachine.winningMoney(FIVE_ROW_WIN, multiply);
+                    slotMachine.winningMoney(FIVE_ROW_WIN);
                     win5++;
                 } else if (count == 4) {
-                    slotMachine.winningMoney(FOUR_ROW_WIN, multiply);
+                    slotMachine.winningMoney(FOUR_ROW_WIN);
                     win4++;
                 } else if (count == 3) {
-                    slotMachine.winningMoney(THREE_ROW_WIN, multiply);
+                    slotMachine.winningMoney(THREE_ROW_WIN);
                     win3++;
                 } else if (count == 2) {
-                    slotMachine.winningMoney(TWO_ROW_WIN, multiply);
+                    slotMachine.winningMoney(TWO_ROW_WIN);
                     win2++;
                 }
             }

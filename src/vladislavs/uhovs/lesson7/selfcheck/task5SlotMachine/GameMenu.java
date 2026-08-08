@@ -4,38 +4,26 @@ import java.util.Scanner;
 
 public class GameMenu {
 
-
-    private static final int MINIMUM_BALANCE_CENTS = 1000;
-    private static final int SLOT_ROWS = 5;
-    private static final int SLOT_COLUMNS = 5;
-    private static final int CENTS_IN_USD = 100;
-    private static final int TWO_ROW_WIN = 40;
-    private static final int THREE_ROW_WIN = 100;
-    private static final int FOUR_ROW_WIN = 1000;
-    private static final int FIVE_ROW_WIN = 1860;
-    private static final long STARTING_SPIN_COST = 100;
-    private static final int TWO_EVEN_SYMBOLS_COUNT = 2;
-    private static final int THREE_EVEN_SYMBOLS_COUNT = 3;
-    private static final int FOUR_EVEN_SYMBOLS_COUNT = 4;
-    private static final int FIVE_EVEN_SYMBOLS_COUNT = 5;
-
-
-    Scanner input = new Scanner(System.in);
-    boolean continueGame = true;
     private final SlotMachine slotMachine;
+    private final Scanner input;
 
-    public GameMenu(SlotMachine slotMachine) {
+    public GameMenu(SlotMachine slotMachine, Scanner input) {
         this.slotMachine = slotMachine;
+        this.input = input;
     }
 
-    public static long depositAmount(Scanner input) {
+    public void validateCorrectInput() {
+        while (!input.hasNextInt()) {
+            input.next();
+            System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
+        }
+    }
+
+    public long depositAmount() {
         long value;
         System.out.println("Deposit amount");
         do {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
-            }
+            validateCorrectInput();
             value = input.nextInt();
             if (value < 0) {
                 System.out.println("You can't deposit a negative amount");
@@ -47,6 +35,7 @@ public class GameMenu {
     }
 
     public void depositMenu() {
+        boolean continueGame = true;
         String depositChoice;
         do {
             System.out.println("You need a minimum balance of 10 USD to play, press D if you want to deposit more");
@@ -54,41 +43,31 @@ public class GameMenu {
             System.out.println("Your balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
             depositChoice = input.next();
             if (depositChoice.equalsIgnoreCase("D")) {
-                slotMachine.deposit(depositAmount(input) * CENTS_IN_USD);
-            } else if (slotMachine.getBalance() >= MINIMUM_BALANCE_CENTS && depositChoice.equalsIgnoreCase("S")) {
+                slotMachine.deposit(depositAmount() * SlotMachine.CENTS_IN_USD);
+            } else if (slotMachine.getBalance() >= SlotMachine.MINIMUM_BALANCE_CENTS && depositChoice.equalsIgnoreCase("S")) {
                 continueGame = false;
             }
         } while (continueGame);
     }
 
-    public void gameMenuChooseOne() {
+    public void slotDisplay() {
         String[][] result = slotMachine.getResult();
-        slotMachine.slots();
-        slotMachine.spinCostDeduct();
-        long balanceBeforeWins = slotMachine.getBalance();
-        for (int r = 0; r < SLOT_ROWS; r++) {
-            for (int c = 0; c < SLOT_COLUMNS; c++) {
+        for (int r = 0; r < SlotMachine.SLOT_ROWS; r++) {
+            for (int c = 0; c < SlotMachine.SLOT_COLUMNS; c++) {
                 System.out.print(result[r][c]);
-                if (c < SLOT_COLUMNS - 1) {
+                if (c < SlotMachine.SLOT_COLUMNS - 1) {
                     System.out.print(" ");
                 }
             }
             System.out.println();
         }
-        int count;
-        for (int r = 0; r < SLOT_ROWS; r++) {
-            count = 1;
-            for (int c = 0; c < SLOT_COLUMNS - 1; c++) {
-                if (result[r][c].equals(result[r][c + 1])) {
-                    count++;
+    }
 
-                } else {
-                    break;
-                }
-            }
-            slotMachine.applyWin(count, slotMachine.getMultiply());
-        }
-        System.out.println("Won: " + (slotMachine.centsToUSD(slotMachine.getBalance() - balanceBeforeWins)) + " USD");
+    public void gameMenuChooseOne() {
+        long balanceBeforeWin = slotMachine.getBalance() - slotMachine.getSpinCost();
+        slotMachine.spin();
+        slotDisplay();
+        System.out.println("Won: " + (slotMachine.centsToUSD(slotMachine.getBalance() - balanceBeforeWin)) + " USD");
         System.out.println("Balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
     }
 
@@ -96,21 +75,18 @@ public class GameMenu {
         System.out.println("Input spin cost");
         int multiply;
         do {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("Wrong input! Only whole numbers are allowed. Try again.");
-            }
+            validateCorrectInput();
             multiply = input.nextInt();
             if (multiply < 0) {
                 System.out.println("You can't input a negative number");
             } else if (multiply == 0) {
                 System.out.println("You can't input zero");
-            } else if (multiply > slotMachine.getBalance() / CENTS_IN_USD) {
+            } else if (multiply > slotMachine.getBalance() / SlotMachine.CENTS_IN_USD) {
                 System.out.println("Spin cost cannot exceed your balance.");
                 System.out.println("Your balance: " + slotMachine.centsToUSD(slotMachine.getBalance()) + " USD");
             }
-        } while (multiply <= 0 || multiply > slotMachine.getBalance() / CENTS_IN_USD);
-        slotMachine.changeSpinCost(STARTING_SPIN_COST, multiply);
+        } while (multiply <= 0 || multiply > slotMachine.getBalance() / SlotMachine.CENTS_IN_USD);
+        slotMachine.changeSpinCost(SlotMachine.STARTING_SPIN_COST, multiply);
     }
 
 }
