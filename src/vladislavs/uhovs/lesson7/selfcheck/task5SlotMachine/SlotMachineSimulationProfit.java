@@ -4,65 +4,51 @@ import java.util.Random;
 
 public class SlotMachineSimulationProfit {
 
-    private static final int TWO_ROW_WIN = 40;
-    private static final int THREE_ROW_WIN = 100;
-    private static final int FOUR_ROW_WIN = 1000;
-    private static final int FIVE_ROW_WIN = 1860;
     private static final int WHOLE_PERCENTAGE = 100;
-    private static final int SLOT_ROWS = 5;
-    private static final int SLOT_COLUMNS = 5;
-
+    private static final int TWO_MATCHING_SYMBOLS = 2;
+    private static final int THREE_MATCHING_SYMBOLS = 3;
+    private static final int FOUR_MATCHING_SYMBOLS = 4;
+    private static final int FIVE_MATCHING_SYMBOLS = 5;
 
     public static void main(String[] args) {
 
-        long spinCost = 100;
-        int count;
-        int count2 = 0;
-        String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
-        String[][] result = new String[5][5];
-        Random random = new Random();
-        long startingBalance = 100000000;
-        long balance = 100000000;
-        long simulationTries = 10000000;
-        int win2 = 0;
-        int win3 = 0;
-        int win4 = 0;
-        int win5 = 0;
-        int multiply = 1;
-        SlotMachine slotMachine = new SlotMachine(balance, spinCost, fruit, result, random,multiply);
 
+        String[] fruit = {"🍒", "🍎", "🥭", "🍍", "🍌"};
+        String[][] result = new String[SlotMachine.SLOT_ROWS][SlotMachine.SLOT_COLUMNS];
+        Random random = new Random();
+        long startingBalance;
+        long balance = 100000000;
+        startingBalance = balance;
+        long simulationTries = 10000000;
+        int twoMatchWin = 0;
+        int threeMatchWin = 0;
+        int fourMatchWin = 0;
+        int fiveMatchWin = 0;
+
+        SlotMachine slotMachine = new SlotMachine(balance, SlotMachine.STARTING_SPIN_COST, fruit, result, random, SlotMachine.STARTING_MULTIPLY);
+        int count2 = 0;
         do {
             count2++;
-            slotMachine.slots();
-            balance -= spinCost;
-
-            for (int r = 0; r < SLOT_ROWS; r++) {
-                count = 1;
-                for (int c = 0; c < SLOT_COLUMNS - 1; c++) {
+            slotMachine.spin();
+            balance = slotMachine.getBalance();
+            for (int r = 0; r < SlotMachine.SLOT_ROWS; r++) {
+                int count = 1;
+                for (int c = 0; c < SlotMachine.SLOT_COLUMNS - 1; c++) {
                     if (result[r][c].equals(result[r][c + 1])) {
                         count++;
-
                     } else {
                         break;
                     }
                 }
-                if (count == 5) {
-                    slotMachine.winningMoney(FIVE_ROW_WIN);
-                    win5++;
-                } else if (count == 4) {
-                    slotMachine.winningMoney(FOUR_ROW_WIN);
-                    win4++;
-                } else if (count == 3) {
-                    slotMachine.winningMoney(THREE_ROW_WIN);
-                    win3++;
-                } else if (count == 2) {
-                    slotMachine.winningMoney(TWO_ROW_WIN);
-                    win2++;
+                switch (count) {
+                    case TWO_MATCHING_SYMBOLS -> twoMatchWin++;
+                    case THREE_MATCHING_SYMBOLS -> threeMatchWin++;
+                    case FOUR_MATCHING_SYMBOLS -> fourMatchWin++;
+                    case FIVE_MATCHING_SYMBOLS -> fiveMatchWin++;
                 }
             }
-
         } while (count2 < simulationTries);
-        long totalBet = simulationTries * spinCost;
+        long totalBet = simulationTries * SlotMachine.STARTING_SPIN_COST;
         long totalPayout = balance - startingBalance + totalBet;
         balance = startingBalance - totalBet + totalPayout;
 
@@ -72,9 +58,10 @@ public class SlotMachineSimulationProfit {
         System.out.println("Casino PROFIT: " + (startingBalance - balance));
         System.out.printf("House edge: %.2f%%%n", houseEdge);
         System.out.printf("RTP: %.2f%%%n", RTP);
-        System.out.println("Win 2: " + win2);
-        System.out.println("Win 3: " + win3);
-        System.out.println("Win 4: " + win4);
-        System.out.println("Win 5: " + win5);
+        System.out.println("Win 2: " + twoMatchWin + " tries");
+        System.out.println("Win 3: " + threeMatchWin + " tries");
+        System.out.println("Win 4: " + fourMatchWin + " tries");
+        System.out.println("Win 5: " + fiveMatchWin + " tries");
+        System.out.println(twoMatchWin + threeMatchWin + fourMatchWin + fiveMatchWin + " all winning combinations");
     }
 }

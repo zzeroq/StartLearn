@@ -68,7 +68,6 @@ public class SlotMachine {
         }
     }
 
-
     public void applyWin(int count) {
         if (count >= TWO_MATCHING_SYMBOLS) {
             long win = switch (count) {
@@ -83,9 +82,8 @@ public class SlotMachine {
     }
 
     public void checkWin() {
-        int count;
         for (int r = 0; r < SLOT_ROWS; r++) {
-            count = 1;
+            int count = 1;
             for (int c = 0; c < SLOT_COLUMNS - 1; c++) {
                 if (result[r][c].equals(result[r][c + 1])) {
                     count++;
