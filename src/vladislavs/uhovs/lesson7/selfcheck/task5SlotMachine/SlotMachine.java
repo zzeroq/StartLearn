@@ -4,12 +4,6 @@ import java.util.Random;
 
 public class SlotMachine {
 
-    private long balance;
-    private long spinCost;
-    private final String[] fruit;
-    private final String[][] result;
-    private final Random random;
-    private int betMultiply;
     private static final int TWO_MATCHING_SYMBOLS = 2;
     private static final int THREE_MATCHING_SYMBOLS = 3;
     private static final int FOUR_MATCHING_SYMBOLS = 4;
@@ -23,12 +17,17 @@ public class SlotMachine {
     static final int MINIMUM_BALANCE_CENTS = 1000;
     static final int CENTS_IN_USD = 100;
     static final long STARTING_SPIN_COST = 100;
-    static final int STARTING_BALANCE = 0;
+    static final long PLAYER_STARTING_BALANCE = 0;
     static final int STARTING_MULTIPLY = 1;
+    static final int STARTING_ID = 1000;
+    private long spinCost;
+    private final String[] fruit;
+    private final String[][] result;
+    private final Random random;
+    private int betMultiply;
 
 
-    public SlotMachine(long balance, long spinCost, String[] fruit, String[][] result, Random random, int betMultiply) {
-        this.balance = balance;
+    public SlotMachine(long spinCost, String[] fruit, String[][] result, Random random, int betMultiply) {
         this.spinCost = spinCost;
         this.fruit = fruit;
         this.result = result;
@@ -36,10 +35,9 @@ public class SlotMachine {
         this.betMultiply = betMultiply;
     }
 
-    public void spin() {
+    public void spin(Player player) {
         slots();
-        spinCostDeduct();
-        checkWin();
+        checkWin(player);
     }
 
 
@@ -51,9 +49,6 @@ public class SlotMachine {
         return result;
     }
 
-    public long getBalance() {
-        return balance;
-    }
 
     public void changeSpinCost(long startSpinCost, int betMultiply) {
         this.betMultiply = betMultiply;
@@ -68,7 +63,7 @@ public class SlotMachine {
         }
     }
 
-    public void applyWin(int count) {
+    public void applyWin(int count, Player player) {
         if (count >= TWO_MATCHING_SYMBOLS) {
             long win = switch (count) {
                 case TWO_MATCHING_SYMBOLS -> TWO_MATCH_WIN;
@@ -77,11 +72,11 @@ public class SlotMachine {
                 case FIVE_MATCHING_SYMBOLS -> FIVE_MATCH_WIN;
                 default -> 0;
             };
-            winningMoney(win);
+            player.winningMoney(win,betMultiply);
         }
     }
 
-    public void checkWin() {
+    public void checkWin(Player player) {
         for (int r = 0; r < SLOT_ROWS; r++) {
             int count = 1;
             for (int c = 0; c < SLOT_COLUMNS - 1; c++) {
@@ -92,25 +87,14 @@ public class SlotMachine {
                     break;
                 }
             }
-            applyWin(count);
+            applyWin(count, player);
         }
-    }
-
-    public void spinCostDeduct() {
-        balance -= spinCost;
-    }
-
-    public void winningMoney(long lineWin) {
-        balance += lineWin * betMultiply;
-    }
-
-    public void deposit(long amount) {
-        balance += amount;
     }
 
     public double centsToUSD(long cents) {
         return (double) cents / CENTS_IN_USD;
     }
+
 
 
 }
